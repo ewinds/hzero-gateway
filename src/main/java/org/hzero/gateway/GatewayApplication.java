@@ -15,13 +15,8 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 public class GatewayApplication {
 
     public static void main(String[] args) {
-        try {
-            new SpringApplicationBuilder(GatewayApplication.class)
-                    .web(WebApplicationType.REACTIVE)
-                    .run(args);
-        }catch (Throwable e){
-            e.printStackTrace();
-        }
-
+        new SpringApplicationBuilder(GatewayApplication.class)
+                .web(WebApplicationType.REACTIVE)
+                .run(args);
     }
 }

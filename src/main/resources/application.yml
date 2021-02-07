@@ -58,19 +58,6 @@ spring:
         - Path=/iam/**
         filters:
         - StripPrefix=1
-#        - name: RequestRateLimiter
-#          args:
-#            redis-rate-limiter.replenishRate: 100
-#            redis-rate-limiter.burstCapacity: 100
-#            redis-rate-limiter.replenishRateMap."user1role1": 1
-#            redis-rate-limiter.burstCapacityMap."user1role1": 1
-#            rate-limiter: "#{@enhancedRedisRateLimiter}"
-#            key-resolver: "#{@userKeyResolver}"
-#            key-resolver: "#{
-#            new org.hzero.gateway.ratelimit.dimension.CombinedKeyResolver(
-#              new org.hzero.gateway.ratelimit.dimension.UserKeyResolver(),
-#              new org.hzero.gateway.ratelimit.dimension.RoleKeyResolver()
-#            )}"
       - id: hoth
         uri: lb://hzero-oauth
         predicates:
@@ -125,8 +112,11 @@ spring:
         - Path=/hadm/**
       # 开启主键加密 可选值 encrypt（主键加密）、to_string（主键变字符串类型）、do_nothing（关闭加密）
       default-filters:
-      - SetRequestHeader=H-Request-Encrypt, ${HZERO_REQUEST_ENCRYPT_MODE:encrypt}
-
+        - SetRequestHeader=H-Request-Encrypt, ${HZERO_REQUEST_ENCRYPT_MODE:encrypt}
+        # 下面两个StripPrefix=0没有实际意义，也不影响实际逻辑，只是为了将SetResponseHeader的顺序调整的更向后
+        - StripPrefix=0
+        - StripPrefix=0
+        - SetResponseHeader=Access-Control-Expose-Headers, Content-Disposition
 server:
   undertow:
     # 设置IO线程数, 它主要执行非阻塞的任务,它们会负责多个连接
@@ -213,6 +203,9 @@ hzero:
         menu-permission:
           # 是否检查菜单中包含了API权限
           enabled: ${HZERO_GATEWAY_FILTER_MENU_PERMISSION:false}
+        api-replay:
+          # 是否启用API防重放
+          enabled: ${HZERO_GATEWAY_FILTER_API_REPLAY:false}
       permission:
         cache-seconds: 600 # 请求地址和对应的权限缓存时间
         cache-size: 3000  # 请求地址和对应的权限缓存大小
@@ -226,10 +219,10 @@ hzero:
           - /*/websocket/**
           - /maintain
           - /actuator/**
-          - /hims/lib/**
           - /hfle/lib/**
           - /*/lib/**
           - /**/webjars/**
+          - /hrpt/ureport/**
   ## 服务整体运维配置
   maintain:
     # 全局运维信息

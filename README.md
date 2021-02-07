@@ -7,8 +7,11 @@
         <a href="http://open.hand-china.com/document-center/doc/application/10039/10149?doc_id=4987"><strong>-- Home Page --</strong></a>
         <br>
         <br>
-         <a href="http://www.apache.org/licenses/LICENSE-2.0">
-             <img src="https://img.shields.io/github/license/alibaba/arthas.svg" >
+         <a href="https://xxxxx">
+             <img src="https://img.shields.io/github/release/xuxueli/xxl-api.svg" >
+         </a>
+         <a href="http://www.gnu.org/licenses/gpl-3.0.html">
+             <img src="https://img.shields.io/badge/license-GPLv3-blue.svg" >
          </a>
     </p>    
 </p>

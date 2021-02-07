@@ -98,7 +98,7 @@ public class WebConditionAutoConfiguration {
             //添加response暴露的header
             String[] responseHeader =
                     {"date", "content-encoding", "server", "etag", "vary", "Cache-Control", "Last-Modified",
-                            "content-type", "transfer-encoding", "connection", "x-application-context"};
+                            "content-type", "transfer-encoding", "connection", "x-application-context", "content-disposition"};
             config.setExposedHeaders(Arrays.asList(responseHeader));
             source.registerCorsConfiguration("/**", config);
             return new CorsWebFilter(source);

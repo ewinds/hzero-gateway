@@ -173,12 +173,6 @@ public class DatabaseRouteDefinitionRepository implements RouteDefinitionReposit
             FilterDefinition stripPrefixDefinition = new FilterDefinition("StripPrefix=" + route.getStripPrefix());
             filterDefinitions.add(stripPrefixDefinition);
         }
-        if (!StringUtils.isEmpty(route.getSensitiveHeaders())) {
-            FilterDefinition removeRequestHeaderFilter = new FilterDefinition("RemoveResponseHeader=" + route.getSensitiveHeaders());
-            filterDefinitions.add(removeRequestHeaderFilter);
-        }
-        FilterDefinition preserveHostHeaderDefinition = new FilterDefinition("PreserveHostHeader");
-        filterDefinitions.add(preserveHostHeaderDefinition);
         if (filters != null) {
             filters.forEach(filter -> {
                 FilterDefinition def = new FilterDefinition();
@@ -194,6 +188,14 @@ public class DatabaseRouteDefinitionRepository implements RouteDefinitionReposit
                 filterDefinitions.add(def);
             });
         }
+
+        if (!StringUtils.isEmpty(route.getSensitiveHeaders())) {
+            FilterDefinition removeRequestHeaderFilter = new FilterDefinition("RemoveResponseHeader=" + route.getSensitiveHeaders());
+            filterDefinitions.add(removeRequestHeaderFilter);
+        }
+        FilterDefinition preserveHostHeaderDefinition = new FilterDefinition("PreserveHostHeader");
+        filterDefinitions.add(preserveHostHeaderDefinition);
+
         return filterDefinitions;
     }
 

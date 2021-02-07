@@ -30,7 +30,7 @@ public class RequestCountTraceListener implements TraceListener {
 
     @Override
     public void onTrace(HttpTrace trace) {
-        String uri = trace.getRequest().getUri().getPath();
+        String uri = trace.getRequest().getUri().getPath() + trace.getRequest().getMethod();
         int index = requestCountRules.match(uri);
         if (index != -1) {
             String ip = getIp(trace);

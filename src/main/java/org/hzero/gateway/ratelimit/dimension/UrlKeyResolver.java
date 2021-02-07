@@ -26,6 +26,10 @@ public class UrlKeyResolver implements KeyResolver, SwitcherDelegate {
     private static final Logger LOGGER = LoggerFactory.getLogger(UserKeyResolver.class);
 
     private static final String PREFIX = "url";
+    /**
+     * 能进行url模式模板匹配的url正则
+     */
+    private static final String URL_PATTERN_TEMP_MATCH_REGEX = ".*\\{[0-9]*\\}.*";
 
     private String interestUrl;
 
@@ -48,10 +52,12 @@ public class UrlKeyResolver implements KeyResolver, SwitcherDelegate {
 
     private void initInterestUrlPattern() {
         String urlPatternTemp = interestUrl;
-        if (!StringUtils.isEmpty(urlPatternTemp)){
-            int count = Integer.parseInt(urlPatternTemp.substring(urlPatternTemp.lastIndexOf("{") + 1, urlPatternTemp.lastIndexOf("}")));
-            for (int i = 1; i <= count; i++){
-                urlPatternTemp = urlPatternTemp.replace("{" + i + "}", "\\S+");
+        if (!StringUtils.isEmpty(urlPatternTemp)) {
+            if (urlPatternTemp.matches(URL_PATTERN_TEMP_MATCH_REGEX)) {
+                int count = Integer.parseInt(urlPatternTemp.substring(urlPatternTemp.lastIndexOf("{") + 1, urlPatternTemp.lastIndexOf("}")));
+                for (int i = 1; i <= count; i++) {
+                    urlPatternTemp = urlPatternTemp.replace("{" + i + "}", "\\S+");
+                }
             }
         }
         interestUrlPattern = Pattern.compile(urlPatternTemp);

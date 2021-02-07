@@ -81,6 +81,8 @@ env:
     EUREKA_EXPIRATION_DURATION: 30
     # 是否检查菜单中包含了API权限
     HZERO_GATEWAY_FILTER_MENU_PERMISSION: false
+    # 是否启用API防重放
+    HZERO_GATEWAY_FILTER_API_REPLAY: false
     # 允许跨域的域
     SECURE_HEADERS_FRAME_OPTIONS: allow-from http://hzeronf.saas.hand-china.com
     # 开启主键加密  encrypt（主键加密）、to_string（主键变字符串类型）、do_nothing（关闭加密）
